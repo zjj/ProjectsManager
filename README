@@ -1,0 +1,13 @@
+sync the database before you run 'python setup.py install'
+modify the env_path(line 10) to the trac environment that you want to use this plugin in the database_sync.py
+modify the username who you want to add the actions to in the particular Environment the env_path points to in the database_sync.py
+modify the 'TRAC_DIR','INHERIT_FILE'and 'BASE_URL' (they are in the first few linew) in the projectsmanage.py to the path that corresponding to your own server
+add next three rows to trac.ini (modify the inherit_file and base_url to the right values corresponding to your projects
+
+[projectsmanager]
+inherit_file=/var/....g_trac.ini
+base_url=http://172.16.2.177:8000
+
+
+            
+

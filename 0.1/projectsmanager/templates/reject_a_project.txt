@@ -1,0 +1,3 @@
+Hi ${username}:
+  The project named ${proj_full_name} you applied on ${apply_time} was rejected by the SuperUser ${superuser} on ${exam_time}
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:with="preview_mode = 'preview' in req.args">
+  <xi:include href="layout.html" />
+  <head>
+  <title>Apply a project</title>
+<script type="text/javascript">
+
+function check()
+{   
+
+    email = document.getElementById("email").value;
+    email_patt = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+　　if(!email_patt.test(email))
+        {
+            alert('Email格式错误!');
+            return false;
+            }
+    proj_name = document.getElementById("proj_name").value;
+    proj_name_patt = /^[\w][.\-\w]+$/;
+    if(!proj_name_patt.test(proj_name))
+        {
+            alert('项目名格式错误');
+            return false;
+            }
+    return true;
+}
+
+</script>
+ 
+</head>
+<body>
+  <h1>项目申请</h1>
+  <form action="" method="POST" onSubmit= "return check();" >
+  <table>
+    <tr>
+    <td>Email: </td><td><input type="text" name="email" id="email"/>\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*</td>
+    </tr>
+    <tr>
+    <td>项目名：</td> <td><input type="text" name="proj_name" id="proj_name"/>^[\w][.\-\w]+$</td>
+    </tr>
+    <tr>
+    <td>项目长名：</td> <td><input type="text" name="proj_full_name" /></td>
+    </tr>
+    <tr>
+    <td>项目描述：</td><td><textarea rows="10" cols="30" name="description"></textarea></td>
+    </tr>
+    <tr>
+    <td></td><td><input type="submit" value="Submit" /></td>
+    </tr>
+  </table>
+  </form>
+
+</body>
+</html>

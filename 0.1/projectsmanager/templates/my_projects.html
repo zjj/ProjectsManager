@@ -1,0 +1,53 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:with="preview_mode = 'preview' in req.args">
+  <xi:include href="layout.html" />
+  <head>
+  <title>My Projects</title>
+
+
+</head>
+<body>
+<div align="right"><a href='apply'>申请新项目</a> </div>
+
+<div>
+<table class="listing" width='50'>
+<tr>
+    <th>
+        <form action ="" method = "post">
+            <input type="checkbox" name="pending"  value ="on" />pending
+            <input type="checkbox" name="approved" value ="on"/>approved
+            <input type="checkbox" name="rejected" value ="on"/>rejected
+            <input type="submit" value="筛选"/>
+        </form>
+    </th>
+</tr>
+</table>
+</div>
+<div>
+<center><xi:include href="page_index.html"/></center>
+<table class="listing">
+<tr>
+<th ><a href="">项目名</a></th><th><a href=''>项目描述</a></th><th><a href=''>申请时间</a></th><th><a href=''>通过时间</a></th><th><a href=''>状态</a></th>
+</tr>
+<tr py:for="project in projects_to_show">
+    <td py:if="project.stat=='approved'"><a href="${base_url}/${project.proj_name}">${project.proj_full_name}</a></td>
+    <td py:if="project.stat!='approved'">${project.proj_full_name}</td>
+    <td ><span title='${project.description}'>${project.short_description}</span></td>
+    <td>${project.apply_time}</td>
+    <td>${project.exam_time}</td>
+    <td>${project.stat}</td>
+</tr>
+</table>
+</div>
+
+
+
+</body>
+</html>
+

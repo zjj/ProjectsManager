@@ -1,0 +1,203 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:with="preview_mode = 'preview' in req.args">
+  <xi:include href="layout.html" />
+  <head>
+    <title>Projects Manage</title>
+  <script type="text/javascript" src="${chrome.htdocs_location}js/folding.js"></script>
+    <script type="text/javascript">
+      jQuery(document).ready(function($){
+        $(".foldable").enableFolding(true, true);
+        $("tbody .trac-toggler a").each(function() {
+          $(this).attr("href", "").click(function() {
+            var a = $(this);
+            a.closest("td").toggleClass("collapsed");
+            a.text(a.text() == "+"? "&ndash;": "+");
+            return false;
+          });
+        });
+        $("thead .trac-toggler a").each(function() {
+          $(this).attr("href", "").click(function() {
+            var td = $(this).closest("table").find("tbody td");
+            var a = td.find(".trac-toggler a");
+            if ($(this).text() == "+") {
+              td.removeClass("collapsed");
+              a.text("&ndash;");
+            } else {
+              td.addClass("collapsed");
+              a.text("+");
+            }
+            return false;
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+<div align="right" ><a href='myproject'>我的项目</a> <a href='apply'>申请新项目</a> </div><br />
+
+<div>
+    <h1>待审批项目</h1>
+    <center py:with="paginator =p" ><div xmlns="http://www.w3.org/1999/xhtml" 
+     xmlns:py="http://genshi.edgewall.org/" class="paging" py:if="paginator.has_more_pages"> 
+
+    <span py:if="paginator.has_previous_page" class="previous"> 
+      <a href="${prev_href1}" title="Previous Page">&larr;</a> 
+    </span> 
+    <py:for each="page in paginator.shown_pages"> 
+      <span py:if="page.string == paginator.current_page.string"> 
+        <span py:if="page.string == paginator.current_page.string" class="${paginator.current_page['class']}">${paginator.current_page.string}</span> 
+      </span> 
+      <span py:if="page.string != paginator.current_page.string"> 
+        <a href="${page.href}" title="${page.title}">${page.string}</a> 
+      </span> 
+    </py:for> 
+    <span py:if="paginator.has_next_page" class="next"> 
+      <a href="${next_href1}" title="Next Page">&rarr;</a> 
+    </span> 
+
+</div> 
+</center>
+    
+    <table class="listing">
+        <form method="POST">
+        <input type="text" style="display:none" value="${current_pending_page}" name="p"/>
+        <input type="text" style="display:none" value="${current_approved_page}" name="a"/>
+        <input type="text" style="display:none" value="${current_rejected_page}" name="r"/>
+        <tr>
+            <th>项目名</th><th>项目描述</th><th>申请者</th><th>Email</th><th>申请时间</th><th>审批</th>
+        </tr>
+        <tr py:for="project in pending_projects">
+            <td>${project.proj_full_name}</td>
+            <td ><span title='${project.description}'>${project.short_description}</span></td>
+            <td>${project.owner}</td>
+            <td>${project.email}</td>
+            <td>${project.apply_time}</td>
+            <td>
+                <select name="${project.proj_name}">
+                    <option value="ignore">忽略</option>
+                    <option value="approve">批准</option>
+                    <option value="reject">拒绝</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td><td></td><td></td><td></td><td></td><td><input type="submit" value="提交" /></td>
+        </tr>
+        </form>
+    </table>
+</div>
+
+<br/>
+
+
+<div>
+<h1>通过审批项目</h1>
+    <center py:with="paginator =a" ><div xmlns="http://www.w3.org/1999/xhtml" 
+     xmlns:py="http://genshi.edgewall.org/" class="paging" py:if="paginator.has_more_pages"> 
+
+    <span py:if="paginator.has_previous_page" class="previous"> 
+      <a href="${prev_href2}" title="Previous Page">&larr;</a> 
+    </span> 
+    <py:for each="page in paginator.shown_pages"> 
+      <span py:if="page.string == paginator.current_page.string"> 
+        <span py:if="page.string == paginator.current_page.string" class="${paginator.current_page['class']}">${paginator.current_page.string}</span> 
+      </span> 
+      <span py:if="page.string != paginator.current_page.string"> 
+        <a href="${page.href}" title="${page.title}">${page.string}</a> 
+      </span> 
+    </py:for> 
+    <span py:if="paginator.has_next_page" class="next"> 
+      <a href="${next_href2}" title="Next Page">&rarr;</a> 
+    </span> 
+
+</div> 
+</center>
+<table class="listing">
+<form method="POST">
+    <input type="text" style="display:none" value="${current_pending_page}" name="p"/>
+    <input type="text" style="display:none" value="${current_approved_page}" name="a"/>
+    <input type="text" style="display:none" value="${current_rejected_page}" name="r"/>
+<tr>
+<th>项目名</th><th>项目描述</th><th>创建者</th><th>申请时间</th><th>通过时间</th><th>删除/保留</th>
+</tr>
+<tr py:for="project in approved_projects">
+    <td><a href="${base_url}/${project.proj_name}">${project.proj_full_name}</a></td>
+    <td ><span title='${project.description}'>${project.short_description}</span></td>
+    <td>${project.owner}</td>
+    <td>${project.apply_time}</td>
+    <td>${project.exam_time}</td>
+    <td>
+        <select name="${project.proj_name}">
+        <option value="ignore" >忽略</option>
+        <option value="delete">删除</option>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td></td><td></td><td></td><td></td><td></td><td><input type="submit" value="提交" /></td>
+</tr>
+</form>
+</table>
+</div>
+<br/>
+
+<div>
+<h1>未通过审批的项目</h1>
+<center py:with="paginator =r"><div xmlns="http://www.w3.org/1999/xhtml" 
+     xmlns:py="http://genshi.edgewall.org/" class="paging" py:if="paginator.has_more_pages"> 
+
+    <span py:if="paginator.has_previous_page" class="previous"> 
+      <a href="${prev_href3}" title="Previous Page">&larr;</a> 
+    </span> 
+    <py:for each="page in paginator.shown_pages"> 
+      <span py:if="page.string == paginator.current_page.string"> 
+        <span py:if="page.string == paginator.current_page.string" class="${paginator.current_page['class']}">${paginator.current_page.string}</span> 
+      </span> 
+      <span py:if="page.string != paginator.current_page.string"> 
+        <a href="${page.href}" title="${page.title}">${page.string}</a> 
+      </span> 
+    </py:for> 
+    <span py:if="paginator.has_next_page"  class="next"> 
+      <a href="${next_href3}" title="Next Page">&rarr;</a> 
+    </span> 
+
+</div> 
+</center>
+<table class="listing">
+<form method="POST">
+<input type="text" style="display:none" value="${current_pending_page}" name="p"/>
+<input type="text" style="display:none" value="${current_approved_page}" name="a"/>
+<input type="text" style="display:none" value="${current_rejected_page}" name="r"/>
+
+<tr>
+<th>项目名</th><th>项目描述</th><th>申请者</th><th>申请时间</th><th>拒绝时间</th><th>删除/批准</th>
+</tr>
+<tr py:for="project in rejected_projects">
+    <td>${project.proj_full_name}</td>
+    <td ><span title='${project.description}'>${project.short_description}</span></td>
+    <td>${project.owner}</td>
+    <td>${project.apply_time}</td>
+    <td>${project.exam_time}</td>
+    <td>
+        <select name="${project.proj_name}">
+        <option value="ignore">忽略</option>
+        <option value="delete">删除</option>
+        <option value="approve">批准</option>
+        </select>
+    </td>
+</tr>
+<tr>
+<td></td><td></td><td></td><td></td><td></td><td><input type="submit" value="提交" /></td>
+</tr>
+</form>
+</table>
+</div>
+</body>
+</html>
+

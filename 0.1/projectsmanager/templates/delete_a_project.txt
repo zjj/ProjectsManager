@@ -1,0 +1,4 @@
+Hi ${username}:
+  The project named ${proj_full_name} you applied on ${apply_time} was deleted by the SuperUser ${superuser} on ${exam_time}
+  
+

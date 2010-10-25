@@ -1,0 +1,17 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:i18n="http://genshi.edgewall.org/i18n"
+      py:with="preview_mode = 'preview' in req.args">
+  <xi:include href="layout.html" />
+  <head>
+  <title>Apply and Create Success</title>
+ 
+  </head>
+  <body>
+   项目创建成功！<a href="${base_url}/${proj_name_apply}">点击访问该项目</a>
+  </body>
+  </html>
