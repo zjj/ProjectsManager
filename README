@@ -1,13 +1,19 @@
-sync the database before you run 'python setup.py install'
-modify the env_path(line 10) to the trac environment that you want to use this plugin in the database_sync.py
-modify the username who you want to add the actions to in the particular Environment the env_path points to in the database_sync.py
-modify the 'TRAC_DIR','INHERIT_FILE'and 'BASE_URL' (they are in the first few linew) in the projectsmanage.py to the path that corresponding to your own server
-add next three rows to trac.ini (modify the inherit_file and base_url to the right values corresponding to your projects
+This is a Trac plugin for managing your trac projects.
+if your are an admin of a server managing the trac projects,it's a good choice for you .
 
-[projectsmanager]
-inherit_file=/var/....g_trac.ini
-base_url=http://172.16.2.177:8000
+Functions:
+    (note:you have to install the AccountManagerPlugin first!)
+    1. apply a project 
+    2. project manager (approve a project spply ,deny a project supply,delete a project and so on)
+    3. search the project you want.
+    4. add the users' actions to timeline
+    5. email ( when the statue of the project you applied changes,the system will notify you via email)
 
+config the SMTP yourself.
 
-            
+I know it's not perfect ,so i need your help to perfect it !
+
+zhongjj
+Email : 79492390@qq.com
+        openlibrary@qq.com
 
