@@ -12,7 +12,6 @@ setup(
         projectsmanager = projectsmanager
     """,
     description = 'Projects management plugin for Trac',
-    packages=['projectsmanager'],
     package_data={'projectsmanager': ['templates/*.html',
                                       'templates/*.txt']},
 )
